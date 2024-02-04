@@ -27,7 +27,7 @@ Combining these two inputs, a colored graph is represented programmatically.
 
 To run this code, make use of the `Makefile`. A description of each option is as follows:
 
-`make all`: Compiles the Circom circuit, generates witnesses, fully runs the Powers of Tau Ceremony, and finally generates and verifies a proof for the circuit given a set of witnesses. The witnesses used are in `circuits/input.json`.
+`make all`: Cleans the directory, compiles the Circom circuit, generates witnesses, fully runs the Powers of Tau Ceremony, and finally generates and verifies a proof for the circuit given a set of witnesses. The witnesses used are in `circuits/input.json`.
 
 `make circuit`: Compiles the Circom circuit and generates witnesses. The output can be found in `artifacts/compilation`.
 
@@ -36,3 +36,18 @@ To run this code, make use of the `Makefile`. A description of each option is as
 `make proof`: Generates and verifies a proof for the circuit given the inputs in `circuits/input.json`. The output can be found in `artifacts/proof`.
 
 `make clean`: Cleans the repository of all files relating to the compilation, setup, or proving stage.
+
+To change the inputs of the proof, alter the `circuits/input.json` file's contents. The file contains two keys:
+
+```
+{
+    "graph": [[0,1],[1,2],[2,3],[2,4],[3,4],[4,0]],
+    "colors": [0,1,0,1,2]
+}
+```
+
+Additionally, change the inputs to `circuits/main.circom` need to be changed. 
+```
+component main {public [graph, colors]} = ThreeColoring(N,M);
+```
+Set `N` (number of nodes) and `M` (number of edges) according to the graph in `input.json`.

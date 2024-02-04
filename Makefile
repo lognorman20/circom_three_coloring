@@ -46,6 +46,6 @@ clean:
 	rm -rf artifacts *.r1cs *.sym *_js *.ptau
 	@echo "Cleaned directory."
 
-all: circuit ptau proof
+all: clean circuit ptau proof
 
 .PHONY: circuit ptau proof clean all
