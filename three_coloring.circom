@@ -1,3 +1,6 @@
+// Credit for `CalulateTotal` and `AtIndex` goes to @rubydusa:
+// https://medium.com/@rubydusa/graceful-tree-labeling-in-circom-a-look-into-a-circom-circuit-89eccec31f61?source=user_profile---------1----------------------------
+
 pragma circom 2.1.8;
 include "./node_modules/circomlib/circuits/comparators.circom";
 
@@ -31,8 +34,8 @@ template AtIndex(N) {
 }
 
 // Checks if a given graph is three colorable.
-// N is the number of nodes in the graph
-// M is the number of edges in the graph
+// N = # nodes
+// M = # edges
 template ThreeColoring(N, M) {
     signal input graph[M][2];
     signal input colors[N];
