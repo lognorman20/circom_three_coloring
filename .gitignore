@@ -1,4 +1,4 @@
-artifacts
+artifacts/setup/*
 node_modules
 *.r1cs
 *.sym
