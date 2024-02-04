@@ -52,6 +52,12 @@ template ThreeColoring(N, M) {
 
         var eq = IsEqual()([leftColor, rightColor]);
         capDetector += eq;
+
+        // debugging
+        if (eq) {
+            log("the two bad nodes are", leftNode, rightNode);
+            log("their colors are", leftColor, rightColor);
+        }
     }
 
     out <== IsZero()(capDetector);
