@@ -1,17 +1,19 @@
 SHELL := /bin/bash
 .SHELLFLAGS := -e # make the script stop if a command fails
 
-BASE_DIR := artifacts
-COMP_DIR := $(BASE_DIR)/compilation
-SETUP_DIR := $(BASE_DIR)/setup
-PROOF_DIR := $(BASE_DIR)/proof
+ARTIFACT_DIR := artifacts
+CIRCUIT_DIR := circuits
+COMP_DIR := $(ARTIFACT_DIR)/compilation
+SETUP_DIR := $(ARTIFACT_DIR)/setup
+PROOF_DIR := $(ARTIFACT_DIR)/proof
+WTNS_INPUT := $(CIRCUIT_DIR)/input.json
 
 circuit:
 	@echo "Compiling circuit..."
-	circom main.circom --r1cs --wasm --sym
-	mkdir -p $(BASE_DIR)/{setup,compilation,proof}
+	circom $(CIRCUIT_DIR)/main.circom --r1cs --wasm --sym
+	mkdir -p $(ARTIFACT_DIR)/{setup,compilation,proof}
 	mv *_js *.r1cs *.sym $(COMP_DIR)
-	node $(COMP_DIR)/main_js/generate_witness.js $(COMP_DIR)/main_js/main.wasm input.json $(COMP_DIR)/main_js/witness.wtns
+	node $(COMP_DIR)/main_js/generate_witness.js $(COMP_DIR)/main_js/main.wasm $(WTNS_INPUT) $(COMP_DIR)/main_js/witness.wtns
 	snarkjs wtns check $(COMP_DIR)/main.r1cs $(COMP_DIR)/main_js/witness.wtns
 	@echo "Finished compiling circuit!"
 
@@ -35,7 +37,7 @@ ptau:
 
 proof:
 	@echo "Proving the circuit with witness..."
-	snarkjs groth16 fullprove input.json $(COMP_DIR)/main_js/main.wasm $(SETUP_DIR)/circuit_final.zkey $(PROOF_DIR)/proof.json $(PROOF_DIR)/public.json
+	snarkjs groth16 fullprove $(WTNS_INPUT) $(COMP_DIR)/main_js/main.wasm $(SETUP_DIR)/circuit_final.zkey $(PROOF_DIR)/proof.json $(PROOF_DIR)/public.json
 	@echo "Verifying the circuit with witness..."
 	snarkjs groth16 verify $(SETUP_DIR)/verification_key.json $(PROOF_DIR)/public.json $(PROOF_DIR)/proof.json
 	@echo "Successfully generated and verified a proof for the circuit!"
