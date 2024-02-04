@@ -1,0 +1,5 @@
+artifacts
+node_modules
+*.r1cs
+*.sym
+three_coloring_js
