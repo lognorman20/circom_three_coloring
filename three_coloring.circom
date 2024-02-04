@@ -41,8 +41,8 @@ template ThreeColoring(N, M) {
     signal input colors[N];
     signal output out;
 
-    // iterate over edges and check if nodes are the same color
-    var capDetector = 0;
+    // check nodes incident to the ith edge to see if they're the same color
+    var capMeter = 0;
     for (var i = 0; i < M; i++) {
         var leftNode = graph[i][0];
         var rightNode = graph[i][1];
@@ -51,7 +51,7 @@ template ThreeColoring(N, M) {
         var rightColor = AtIndex(N)(index <== rightNode, array <== colors);
 
         var eq = IsEqual()([leftColor, rightColor]);
-        capDetector += eq;
+        capMeter += eq;
 
         // debugging
         if (eq) {
@@ -60,7 +60,6 @@ template ThreeColoring(N, M) {
         }
     }
 
-    out <== IsZero()(capDetector);
-
+    out <== IsZero()(capMeter);
     log("output:", out);
 }
