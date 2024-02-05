@@ -30,6 +30,8 @@ First, clone this repo using the following command:
 git clone https://github.com/lognorman20/circom_three_coloring.git
 ```
 
+Next, ensure that you've installed [Circom and SnarkJS](https://docs.circom.io/getting-started/installation/).
+
 Use the `Makefile` to run core operations. A description of each option is as follows:
 
 `make all`: Cleans the directory, compiles the Circom circuit, generates witnesses, fully runs the Powers of Tau Ceremony, and finally generates and verifies a proof for the circuit given a set of witnesses. The witnesses used are in `circuits/input.json`.
